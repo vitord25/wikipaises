@@ -1,0 +1,18 @@
+.footer { background: #1a1a1a; color: #999; margin-top: var(--space-2xl); }
+
+.inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--space-xl); flex-wrap: wrap;
+}
+
+.logo { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: #fff; display: block; margin-bottom: var(--space-sm); }
+
+.tagline { font-size: 0.65rem; letter-spacing: 0.04em; max-width: 200px; }
+
+.links { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+
+.link { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: #999; transition: color 0.2s; }
+
+.link:hover { color: #fff; }
