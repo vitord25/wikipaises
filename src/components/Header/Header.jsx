@@ -3,10 +3,6 @@ import styles from './Header.module.css'
 
 const REGIONS = ['Europe', 'Americas', 'Asia', 'Africa', 'Oceania']
 
-// Props recebidas:
-// - activeRegion: qual continente está selecionado
-// - onRegionChange: função chamada ao clicar num continente
-// - showBack: se true, mostra o botão "← Voltar"
 function Header({ activeRegion = '', onRegionChange, showBack = false }) {
   const navigate = useNavigate()
 

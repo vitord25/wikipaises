@@ -29,7 +29,6 @@ function Home() {
       console.error(err)
       setError('Não foi possível carregar os países. Verifique sua conexão.')
     } finally {
-      // finally roda sempre — com erro ou sem
       setLoading(false)
     }
   }, [])
@@ -43,23 +42,36 @@ function Home() {
     .filter((c) => !activeRegion || c.region === activeRegion)
     .filter((c) => !search.trim() || c.name.common.toLowerCase().includes(search.toLowerCase()))
 
+
   // Paginação
   const totalPages    = Math.max(1, Math.ceil(filtered.length / COUNTRIES_PER_PAGE))
   const safePageNumber = Math.min(page, totalPages)
   const start         = (safePageNumber - 1) * COUNTRIES_PER_PAGE
   const pageItems     = filtered.slice(start, start + COUNTRIES_PER_PAGE)
 
-  const handleSearch = (value) => { setSearch(value); setPage(1) }
-  const handleRegionChange = (region) => { setActiveRegion(region); setPage(1) }
+  const handleSearch = (value) => {
+  setSearch(value);
+    setPage(1)
+  }
+
+  const handleRegionChange = (region) => {
+  setActiveRegion(region);
+  setPage(1)
+  }
 
   return (
     <div className={styles.page}>
-      <Header activeRegion={activeRegion} onRegionChange={handleRegionChange} />
+      <Header
+        activeRegion={activeRegion}
+        onRegionChange={handleRegionChange}
+      />
 
       <main className={styles.main}>
         <section className={styles.hero}>
           <h1 className={styles.heroTitle}>Explore the Atlas</h1>
-          <p className={styles.heroSub}>A CURATED DIGITAL ARCHIVE OF SOVEREIGN NATIONS AND CULTURES.</p>
+          <p className={styles.heroSub}>
+            A CURATED DIGITAL ARCHIVE OF SOVEREIGN NATIONS AND CULTURES.
+          </p>
         </section>
 
         <div className={styles.toolbar}>
@@ -95,7 +107,7 @@ function Home() {
         )}
 
         {!loading && error && (
-          <div className={styles.centerMsg}>
+          <div className={styles.errorMsg}>
             <p>{error}</p>
             <button onClick={fetchCountries}>Tentar novamente</button>
           </div>
@@ -108,11 +120,35 @@ function Home() {
         )}
 
         {!loading && !error && filtered.length > 0 && (
-          <div className={styles.grid}>
-            {pageItems.map((country) => (
-              <Card key={country.cca3} country={country} />
-            ))}
-          </div>
+          <>
+            <div className={styles.grid}>
+              {pageItems.map((country) => (
+                <Card key={country.cca3} country={country} />
+              ))}
+            </div>
+
+            <div className={styles.pagination}>
+              <button
+                className={styles.pageBtn}
+                onClick={() => setPage((p) => p - 1)}
+                disabled={safePageNumber === 1}
+              >
+                ← PREVIOUS
+              </button>
+
+              <span className={styles.pageInfo}>
+                Page {safePageNumber} of {totalPages}
+              </span>
+
+              <button
+                className={styles.pageBtn}
+                onClick={() => setPage((p) => p + 1)}
+                disabled={safePageNumber === totalPages}
+              >
+                NEXT →
+              </button>
+            </div>
+          </>
         )}
       </main>
 
